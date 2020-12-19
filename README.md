@@ -1,6 +1,6 @@
 # Arknights Auto Helper
 
-*Forked by ligeek from ninthDevilHAUNSTER/ArknightsAutoHelper*  
+*Forked by ligeek from [ninthDevilHAUNSTER/ArknightsAutoHelper](https://github.com/ninthDevilHAUNSTER/ArknightsAutoHelper)*  
 
 *大概算是自己用的版本，按照喜好改了下*
 
