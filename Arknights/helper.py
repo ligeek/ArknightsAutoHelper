@@ -68,7 +68,11 @@ class ArknightsHelper(object):
         self.refill_with_originium = config.get('behavior/refill_ap_with_originium', False)
         self.use_refill = self.refill_with_item or self.refill_with_originium
         self.loots = {}
-        self.use_penguin_report = config.get('reporting/enabled', False)
+        if ((self.viewport[0] < 1280) or (self.viewport[1] < 600)):
+            self.use_penguin_report = False
+            logger.error("已禁用企鹅数据上报：显示分辨率过低，可能无法准确识别掉落")
+        else:
+            self.use_penguin_report = config.get('reporting/enabled', False)
         if self.use_penguin_report:
             self.penguin_reporter = penguin_stats.reporter.PenguinStatsReporter()
         self.refill_count = 0

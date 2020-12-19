@@ -17,6 +17,7 @@ FILE_PATH = os.path.realpath(os.path.dirname(__file__))
 root = os.path.realpath(os.path.join(FILE_PATH, '..'))
 CONFIG_PATH = os.path.realpath(os.path.join(root, "config"))
 excludeList_file = os.path.join(CONFIG_PATH, "excludeList.json")
+exclude_from_validation = []
 
 def _object_in(collection, obj):
     for x in collection:
@@ -104,6 +105,9 @@ class PenguinStatsReporter:
             import imgreco.item
             recognizer_data = imgreco.item.load_data()
             unrecognized_items = (set(self.item_map.keys())) - (set(imgreco.item.all_known_items()) | set(EXTRA_KNOWN_ITEMS))
+            logger.info("加载排除物品列表")
+            with open(excludeList_file, 'r', encoding="utf-8") as f:
+                exclude_from_validation = json.load(f)
             if unrecognized_items:
                 logger.warn('企鹅数据中存在未识别的物品：%s', ', '.join(unrecognized_items))
                 logger.warn('为避免产生统计偏差，已禁用汇报功能')
@@ -139,11 +143,6 @@ class PenguinStatsReporter:
             return ReportResult.NothingToReport
 
         itemgroups = recoresult['items']
-
-        exclude_from_validation = []
-        logger.info("尝试加载排除列表")
-        with open(excludeList_file, 'r', encoding="utf-8") as f:
-            exclude_from_validation = json.load(f)
 
         flattenitems = [(groupname, *item) for groupname, items in itemgroups for item in items]
         # [('常规掉落', '固源岩', 1), ...]
