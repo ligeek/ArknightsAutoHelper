@@ -1,5 +1,7 @@
 # Arknights Auto Helper
 
+*Forked by ligeek from ninthDevilHAUNSTER/ArknightsAutoHelper*
+*大概算是自己用的版本，按照喜好改了下*
 > 明日方舟辅助脚本，分支说明如下
 
 | 分支    | 说明    |
