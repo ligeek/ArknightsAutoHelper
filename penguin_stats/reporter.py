@@ -1,5 +1,6 @@
 import logging
 import json
+import sys,os
 from dataclasses import dataclass
 from typing import Union
 import config
@@ -11,6 +12,11 @@ logger = logging.getLogger('PenguinReporter')
 
 REPORT_SOURCE = 'ArknightsAutoHelper'
 
+#文件路径
+FILE_PATH = os.path.realpath(os.path.dirname(__file__))
+root = os.path.realpath(os.path.join(FILE_PATH, '..'))
+CONFIG_PATH = os.path.realpath(os.path.join(root, "config"))
+excludeList_file = os.path.join(CONFIG_PATH, "excludeList.json")
 
 def _object_in(collection, obj):
     for x in collection:
@@ -133,7 +139,11 @@ class PenguinStatsReporter:
             return ReportResult.NothingToReport
 
         itemgroups = recoresult['items']
+
         exclude_from_validation = []
+        logger.info("尝试加载排除列表")
+        with open(excludeList_file, 'r', encoding="utf-8") as f:
+            exclude_from_validation = json.load(f)
 
         flattenitems = [(groupname, *item) for groupname, items in itemgroups for item in items]
         # [('常规掉落', '固源岩', 1), ...]
